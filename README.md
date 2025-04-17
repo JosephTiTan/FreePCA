@@ -7,8 +7,8 @@
 
 ### 1. Install Environment via Anaconda (Recommended)
 ```bash
-conda create -n videocrafter python=3.8.5
-conda activate videocrafter
+conda create -n freepca python=3.8.5
+conda activate freepca
 pip install -r requirements.txt
 ```
 
