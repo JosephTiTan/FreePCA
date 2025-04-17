@@ -12,11 +12,9 @@ conda activate videocrafter
 pip install -r requirements.txt
 ```
 
+### 2. Download pretrained T2V models via [Hugging Face](https://huggingface.co/VideoCrafter/VideoCrafter2/blob/main/model.ckpt), and put the `model.ckpt` in `checkpoints/base_512_v2/model.ckpt`.
 
-## Inference 
-
-1) Download pretrained T2V models via [Hugging Face](https://huggingface.co/VideoCrafter/VideoCrafter2/blob/main/model.ckpt), and put the `model.ckpt` in `checkpoints/base_512_v2/model.ckpt`.
-2) Input the following commands in terminal.
+### 3. Input the following commands in terminal.
 ```bash
   sh scripts/run_text2video.sh
 ```
