@@ -108,7 +108,7 @@ class CrossAttention(nn.Module):
         
 
         all_q = self.to_q(x)
-        context = default(context, x) # 有context选context，没有就X
+        context = default(context, x) 
         ## considering image token additionally
         if context is not None and self.img_cross_attention:
             context, context_img = context[:,:self.text_context_len,:], context[:,self.text_context_len:,:]
@@ -128,9 +128,9 @@ class CrossAttention(nn.Module):
             if context is not None and self.img_cross_attention:
                 all_k_ip, all_v_ip = map(lambda t: rearrange(t, 'b n (h d) -> (b h) n d', h=h), (all_k_ip, all_v_ip))
             
-            # ------------------------128 frame------------------------
+            # ------------------------long frame------------------------
 
-            qk_scale0 = (math.log(64, 16)) ** 0.5
+            qk_scale0 = (math.log(64, 16)) ** 0.5 # attention entropy
 
             all_sim = torch.einsum('b i d, b j d -> b i j',  qk_scale0* all_q, all_k) * self.scale
             if self.relative_position:
@@ -166,7 +166,7 @@ class CrossAttention(nn.Module):
                 all_out = all_out + self.image_cross_attention_scale * all_out_ip
             # del all_q
 
-            # ------------------------16 frame------------------------
+            # ------------------------short frame------------------------
             preserve = 0
             tobeprint_list = []
             for t_start, t_end in context_next:
@@ -214,15 +214,15 @@ class CrossAttention(nn.Module):
                     out = out + self.image_cross_attention_scale * out_ip
                 del q
 
-                # --------------------PCA begin-------------------
+                # --------------------FreePCA begin-------------------
                 if (preserve > 0 and timesteps > 250) or (preserve > 3 and timesteps > 500):
                     
                     dim_d = out.shape[-1]
                     ref_out = rearrange(out, 'b n d -> (b d) n', d=dim_d)
                     
-                    com_out = all_out[:, t_start:t_end, :]
+                    com_out = all_out[:, t_start:t_end, :] # clip the long frames to short frames
                     com_out = rearrange(com_out, 'b n d -> (b d) n', d=dim_d)
-
+                    # Consistency Feature Decomposition
                     ref_mean = torch.mean(ref_out, dim=-1, keepdim=True)
                     ref_data = ref_out - ref_mean
 
@@ -245,19 +245,18 @@ class CrossAttention(nn.Module):
                     cos_similarities = torch.tensor(cos_similarities)
 
                     sorted_indices = torch.argsort(cos_similarities, descending=True)
+                    # Progressive Fusion
+                    selected_k = min(preserve, 3)  
 
-                    sec = min(preserve, 3)  
-
-
-                    comp_pca[:, sorted_indices[sec:]] = 0
-                    origin_pca[:, sorted_indices[:sec]] = 0
+                    comp_pca[:, sorted_indices[selected_k:]] = 0
+                    origin_pca[:, sorted_indices[:selected_k]] = 0
 
                     fuse_pca = origin_pca + comp_pca
 
                     out = torch.matmul(fuse_pca, eigenvectors.t().real) + comp_mean 
 
                     out = rearrange(out, '(b d) n -> b n d', d=dim_d)
-                #---------------------PCA end---------------------
+                #---------------------FreePCA end---------------------
                 preserve += 1
                 
                 value[:,t_start:t_end] += out * weight_tensor #
