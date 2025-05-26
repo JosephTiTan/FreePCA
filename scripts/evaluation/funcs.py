@@ -47,7 +47,7 @@ def batch_ddim_sampling(model, cond, noise_shape, n_samples=1, ddim_steps=50, dd
     batch_variants = []
     #batch_variants1, batch_variants2 = [], []
     for _ in range(n_samples):
-        # x_T = x_T_total[_]
+        x_T = x_T_total[_]
         if ddim_sampler is not None:
             kwargs.update({"clean_cond": True})
             samples, _ = ddim_sampler.sample(S=ddim_steps,
