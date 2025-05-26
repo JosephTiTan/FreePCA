@@ -7,7 +7,7 @@ from einops import rearrange, repeat
 import scipy.io as io
 import numpy as np
 import pickle
-from load_npy import get_mean, get_64mean, get_toprint
+
 try:
     import xformers
     import xformers.ops
