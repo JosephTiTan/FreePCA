@@ -1,7 +1,7 @@
 name="base_512_v2"
 
 ckpt='checkpoints/base_512_v2/model.ckpt'
-config='configs/inference_t2v_512_v2.0.yaml'
+config='config/inference_t2v_512_v2.0.yaml'
 
 prompt_file="prompts/test_prompts.txt"
 res_dir="results"
