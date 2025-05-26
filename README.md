@@ -1,4 +1,4 @@
-# FreePCA：Integrating Consistency Information across Long-short Frames in Training-free Long Video Generation via Principal Component Analysis
+# FreePCA：Integrating Consistency Information across Long-short Frames in Training-free Long Video Generation via Principal Component Analysis([arxiv link](https://arxiv.org/abs/2505.01172))
 
 ## Overview
 ![](overview.jpg)
