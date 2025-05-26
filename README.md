@@ -16,5 +16,5 @@ pip install -r requirements.txt
 
 ### 3. Input the following commands in terminal.
 ```bash
-  sh scripts/run_text2video.sh
+sh scripts/run_text2video.sh
 ```
