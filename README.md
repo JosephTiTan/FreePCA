@@ -26,13 +26,15 @@ sh scripts/run_text2video.sh
 ```
 
 ## Citation
-@inproceedings{tan2025freepca,
+```
+@@misc{tan2025freepca,
   title={Freepca: Integrating consistency information across long-short frames in training-free long video generation via principal component analysis},
   author={Tan, Jiangtong and Yu, Hu and Huang, Jie and Xiao, Jie and Zhao, Feng},
   booktitle={Proceedings of the Computer Vision and Pattern Recognition Conference},
   pages={27979--27988},
   year={2025}
 }
+```
 
 ## Acknowledgements
 Our codebase builds on [Videocrafter2](https://github.com/AILab-CVC/VideoCrafter/tree/main). Thanks the authors for sharing their awesome codebases! 
