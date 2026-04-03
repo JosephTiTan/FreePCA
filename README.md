@@ -1,5 +1,6 @@
 # FreePCA：Integrating Consistency Information across Long-short Frames in Training-free Long Video Generation via Principal Component Analysis([arxiv link](https://arxiv.org/abs/2505.01172))
 
+- 
 ## Overview
 ![](overview.jpg)
 
@@ -24,6 +25,13 @@ pip install -r requirements.txt
 ```bash
 sh scripts/run_text2video.sh
 ```
+
+## Authors
+- Jiangtong Tan
+- Hu Yu
+- Jie Huang - **Project Leader**
+- Jie Xiao
+- Feng Zhao
 
 ## Citation
 ```
